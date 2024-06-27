@@ -1,0 +1,6 @@
+- name: Provision AKS Cluster
+  hosts: localhost
+  tasks:
+    - name: Include AKS role
+      include_role:
+        name: aks
