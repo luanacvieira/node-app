@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t node-app:latest .
+
+      - name: Run tests
+        run: |
+          docker run -d -p 3000:3000 --name node-app-container node-app:latest
+          sleep 10s
+          curl -I http://localhost:3000/index.html
+          curl -I http://localhost:3000/health/check
+
+      - name: Stop and remove Docker container
+        run: docker rm -f node-app-container
