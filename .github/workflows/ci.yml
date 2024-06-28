@@ -17,8 +17,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Diretorio App
         run: |
+          pwd
           ls -la
           cd node-app
+          pwd
           ls -la
       - name: Build Docker image
         run: docker build -t node-app:latest .
