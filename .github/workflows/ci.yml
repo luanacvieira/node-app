@@ -23,7 +23,7 @@ jobs:
           pwd
           ls -la
       - name: Build Docker image
-        run: docker build -t node-app:latest .
+        run: docker build -t node-app/node-app:latest .
 
       - name: Run tests
         run: |
