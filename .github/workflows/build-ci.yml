@@ -1,0 +1,53 @@
+name: Build CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: node-app
+
+    - name: Lint code
+      run: npm run lint
+      working-directory: node-app
+
+    - name: Test code
+      run: npm test
+      working-directory: node-app
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ github.repository }}:latest .
+      working-directory: node-app
+
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Push Docker image to Azure Container Registry
+      run: |
+        docker tag ${{ github.repository }}:latest ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
