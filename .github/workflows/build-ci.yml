@@ -25,15 +25,15 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      working-directory: node-app/node-app
+      working-directory: node-app
 
     - name: Lint code
       run: npm run lint
-      working-directory: node-app/node-app
+      working-directory: node-app
 
     - name: Test code
       run: npm test
-      working-directory: node-app/node-app
+      working-directory: node-app
 
     - name: Build Docker image
       run: |
