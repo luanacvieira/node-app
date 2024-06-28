@@ -15,7 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+      - name: Diretorio App
+        run: |
+          ls -la
+          cd node-app
+          ls -la
       - name: Build Docker image
         run: docker build -t node-app:latest .
 
