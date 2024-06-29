@@ -41,8 +41,7 @@ jobs:
         run: |
           pip install ansible[azure]
           pip install azure
-          pip install azure-mgmt-resource
-
+      
       - name: Verify PATH 222
         run: |
           pwd
