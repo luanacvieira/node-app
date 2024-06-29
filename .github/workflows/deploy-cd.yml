@@ -42,7 +42,8 @@ jobs:
  #     uses: azure/CLI@v1
  #     with:
  #       azcliversion: latest
-
+# az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+        
     - name: Login to Azure
       env:
         AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
@@ -50,8 +51,8 @@ jobs:
         AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
         SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
       run: |
-            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-            az account set --subscription $SUBSCRIPTION_ID
+        az login --service-principal -u 86c288d6-9568-42b6-9502-9ca63da5836d -p .cA8Q~VEBbttFVSjXQB86utMDdza7r5vk1jNNdaE --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
+        az account set --subscription $SUBSCRIPTION_ID
 
     - name: Set up AKS credentials
       run: |
