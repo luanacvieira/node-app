@@ -41,15 +41,13 @@ jobs:
         hosts: localhost
         tasks:
           - name: Azure CLI login using Service Principal
-            ansible.builtin.shell: az login --service-principal -u ea0f02da-f58e-490d-89d1-7fb4dbef53a7 -p QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
-            # az login --service-principal -u "{{ secrets.AZURE_CLIENT_ID }}" -p "{{ secrets.AZURE_CLIENT_SECRET }}" --tenant "{{ secrets.AZURE_TENANT_ID }}"
-#            environment:
-#              AZURE_CLIENT_ID: "{{ secrets.AZURE_CLIENT_ID }}"
-#              AZURE_CLIENT_SECRET: "{{ secrets.AZURE_CLIENT_SECRET }}"
-#              AZURE_TENANT_ID: "{{ secrets.AZURE_TENANT_ID }}"
+            ansible.builtin.shell: az login --service-principal -u "{{ secrets.AZURE_CLIENT_ID }}" -p "{{ secrets.AZURE_CLIENT_SECRET }}" --tenant "{{ secrets.AZURE_TENANT_ID }}"
+            environment:
+              AZURE_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
+              AZURE_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+              AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
 
 # Adicione outras tarefas do Ansible para o provisionamento aqui
-
 #      - name: Run Ansible playbook
 #        env:
 #          AZURE_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
