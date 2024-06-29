@@ -42,7 +42,7 @@ jobs:
         AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       run: |
-          az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+        az login --service-principal -u 86c288d6-9568-42b6-9502-9ca63da5836d -p .cA8Q~VEBbttFVSjXQB86utMDdza7r5vk1jNNdaE --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
 
     - name: Set up Kubectl
       run: |
