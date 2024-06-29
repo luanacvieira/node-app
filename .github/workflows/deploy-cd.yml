@@ -44,10 +44,31 @@ jobs:
         version: 'latest'
 
     - name: Azure login
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
         client-id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
         tenant-id: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
         subscription-id: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
         client-secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+
+    - name: Azure CLI script
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+          az storage -h
+
+    - name: Set up AKS credentials
+      run: |
+        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --admin
+
+    - name: Verify kubectl connection
+      run: |
+        kubectl get nodes
+        kubectl get pods
+    
+    - name: Deploy to AKS
+      run: |
+        kubectl apply -f ./k8s-deployment.yml
 
