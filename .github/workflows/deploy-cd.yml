@@ -24,6 +24,12 @@ jobs:
         pwd
         ls -la
         pwd
+        cd bin
+        pwd
+        ls -la
+        cd linux_amd64
+        pwd
+        ls -la
         sudo install -o root -g root -m 0755 kubelogin /home/runner/work/node-app/node-app/bin/linux_amd64/
         pwd
 
