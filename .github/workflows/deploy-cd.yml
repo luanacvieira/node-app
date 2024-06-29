@@ -33,17 +33,22 @@ jobs:
         sudo install -o root -g root -m 0755 kubelogin /usr/local/bin/kubelogin
         pwd
 
-    - name: Set up kubectl
+    #- name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:
         version: 'latest'
-
+      
  #   - name: Set up Azure CLI
  #     uses: azure/CLI@v1
  #     with:
  #       azcliversion: latest
 # az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
         
+    - name: Set up Azure CLI
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+
     - name: Login to Azure
       env:
         AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
