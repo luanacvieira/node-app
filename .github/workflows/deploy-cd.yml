@@ -20,19 +20,18 @@ jobs:
       with:
         version: 'latest'
 
-    #- name: Azure Login
-    #  uses: azure/login@v1
-    #  with:
-    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-  #  - name: Set up Azure CLI
-  #    uses: azure/CLI@v1
-  #    with:
-  #      azcliversion: latest
+    - name: Set up Azure CLI
+      uses: azure/CLI@v1
+      with:
+      azcliversion: latest
 
     - name: Login to Azure
+      env:
+        AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: "7zc8Q~oVzYDTHmmL0T_C_dkg6YqB~EizaowEQdtD" # ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
       run: |
-        az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
 
     - name: Set up AKS credentials
       run: |
