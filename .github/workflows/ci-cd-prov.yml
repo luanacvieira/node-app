@@ -26,6 +26,11 @@ jobs:
           tenant-id: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
           subscription-id: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
       
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      
       - name: Install Ansible and Azure dependencies
         run: |
           python -m pip install --upgrade pip
