@@ -15,25 +15,25 @@
 #      debug:
 #        msg: "Current working directory is {{ ansible_env.PWD }}"
 
-    - name: Create Resource Group
-      azure_rm_resourcegroup:
-        name: "myResourceGroup" #"{{ secrets.AKS_RESOURCE_GROUP }}"
-        location: "centralus" #"{{ secrets.AZURE_REGION }}"
-      register: rg_result
+#    - name: Create Resource Group
+#      azure_rm_resourcegroup:
+#        name: "myResourceGroup" #"{{ secrets.AKS_RESOURCE_GROUP }}"
+#        location: "centralus" #"{{ secrets.AZURE_REGION }}"
+#      register: rg_result
 
     - name: Create AKS Cluster
       azure_rm_aks:
-        resource_group: "{{ secrets.AKS_RESOURCE_GROUP }}"
-        name: "{{ secrets.AKS_CLUSTER_NAME }}"
-        location: "{{ secrets.AZURE_REGION }}"
+        resource_group: "myResourceGroup"
+        name: "MeuNovoAKS" #"{{ secrets.AKS_CLUSTER_NAME }}"
+        location: "centralus"
         dns_prefix: "myClusterAksNodeApp-dns"
         agent_pool_profiles:
           - name: default
             count: "2"
             vm_size: "Standard_DS2_v2" #"{{ agent_vm_size }}"
         service_principal:
-          client_id: "{{ secrets.AZURE_CLIENT_ID }}"
-          client_secret: "{{ secrets.AZURE_SECRET_ID }}"
+          client_id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" # "{{ secrets.AZURE_CLIENT_ID }}"
+          client_secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" # "{{ secrets.AZURE_SECRET_ID }}"
         tags:
           Environment: Production
       register: aks_result
