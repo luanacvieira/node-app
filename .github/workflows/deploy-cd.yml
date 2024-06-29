@@ -23,7 +23,7 @@ jobs:
     - name: Set up Azure CLI
       uses: azure/CLI@v1
       with:
-      azcliversion: latest
+        azcliversion: latest
 
     - name: Login to Azure
       env:
