@@ -25,10 +25,10 @@ jobs:
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Set up Azure CLI
-      uses: azure/CLI@v1
-      with:
-        azcliversion: latest
+  #  - name: Set up Azure CLI
+  #    uses: azure/CLI@v1
+  #    with:
+  #      azcliversion: latest
 
     - name: Login to Azure
       run: |
