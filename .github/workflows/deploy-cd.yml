@@ -18,11 +18,8 @@ jobs:
     # Passo de Instalação do kubelogin
     - name: Install kubelogin
       run: |
-        pwd
-        cd /usr/local/
-        mkdir -m 0777 bin/kubelogin
-        pwd
         curl -LO https://github.com/Azure/kubelogin/releases/download/v0.1.3/kubelogin-linux-amd64.zip
+        pwd
         unzip ./kubelogin-linux-amd64.zip
         pwd
         ls -la
