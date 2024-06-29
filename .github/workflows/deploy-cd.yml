@@ -6,39 +6,80 @@ on:
       - main
       - master
   workflow_dispatch:  # Para disparo manual
+  
+stages:
+  - deploy
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+deploy:
+  stage: deploy
+  image: mcr.microsoft.com/azure-cli
+  variables:
+    KUBE_CONFIG: $CI_PROJECT_DIR/.kube/config  # Caminho para o arquivo de configuração do kubectl
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+before_script:
+  # Instalação do kubelogin
+  - curl -LO https://github.com/Azure/kubelogin/releases/download/v1.22.0/kubelogin-linux-amd64.zip
+  - unzip kubelogin-linux-amd64.zip
+  - sudo install -o root -g root -m 0755 kubelogin /usr/local/bin/kubelogin
 
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v1
-      with:
-        version: 'latest'
+deploy_job:
+  script:
+    # Configuração da autenticação AAD
+    - az login --service-principal -u $SERVICE_PRINCIPAL_ID -p $SERVICE_PRINCIPAL_SECRET --tenant $TENANT_ID
+    - az account set --subscription $SUBSCRIPTION_ID
+    # Configuração do kubectl para o cluster Kubernetes
+    - mkdir -p $HOME/.kube
+    - cp $KUBE_CONFIG $HOME/.kube/config
+    # Aplicação do arquivo de deployment no cluster Kubernetes
+    - kubectl apply -f ./k8s-deployment.yml
+  after_script:
+    # Limpeza após a execução
+    - rm -rf $HOME/.kube/config
+
+# Definindo variáveis
+variables:
+  SERVICE_PRINCIPAL_ID: "seu_service_principal_id"
+  SERVICE_PRINCIPAL_SECRET: "seu_service_principal_secret"
+  TENANT_ID: "seu_tenant_id"
+  SUBSCRIPTION_ID: "sua_subscription_id"
+
+# Definindo regras de execução
+rules:
+  - if: $CI_PIPELINE_SOURCE == "push"  # Executar apenas em push para o branch principal, ajuste conforme necessário
+    when: always
+
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v2
+
+#    - name: Set up kubectl
+#      uses: azure/setup-kubectl@v1
+#      with:
+#        version: 'latest'
 
  #   - name: Set up Azure CLI
  #     uses: azure/CLI@v1
  #     with:
  #       azcliversion: latest
 
-    - name: Login to Azure
-      env:
-        AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: "7zc8Q~oVzYDTHmmL0T_C_dkg6YqB~EizaowEQdtD" # ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
-      run: |
-            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+#    - name: Login to Azure
+#      env:
+#        AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
+#        AZURE_CLIENT_SECRET: "7zc8Q~oVzYDTHmmL0T_C_dkg6YqB~EizaowEQdtD" # ${{ secrets.AZURE_CLIENT_SECRET }}
+#        AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
+#      run: |
+#            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
 
-    - name: Set up AKS credentials
-      run: |
-        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
+#    - name: Set up AKS credentials
+#      run: |
+#        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
 
-    - name: Deploy to AKS
-      run: kubectl apply -f ./k8s-deployment.yml
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+#    - name: Deploy to AKS
+#      run: kubectl apply -f ./k8s-deployment.yml
+#      env:
+#        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
 
