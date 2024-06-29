@@ -24,8 +24,9 @@ jobs:
 
     - name: Install Ansible and Azure dependencies
       run: |
-        python -m pip3 install --upgrade pip3
-        pip3 install ansible ansible[azure]
+        python -m pip3 install --upgrade pip
+        pip3 install "ansible==2.9.17"
+        pip3 install ansible[azure]
 
     - name: Run Ansible playbook
       env:
