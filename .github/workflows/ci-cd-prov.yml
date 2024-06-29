@@ -42,7 +42,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install ansible[azure]
           pip install azure
-          pip install azure-mgmt-resource
+#          pip install azure-mgmt-resource
 
       - name: Verify PATH 222
         run: |
