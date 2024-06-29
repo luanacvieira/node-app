@@ -41,15 +41,21 @@ jobs:
 
 # az account set --subscription $SUBSCRIPTION_ID
 
-    - name: Login to Azure
-      env:
-        AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: "7zc8Q~oVzYDTHmmL0T_C_dkg6YqB~EizaowEQdtD" # ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
-        SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
-      run: |
-        az login --service-principal -u 86c288d6-9568-42b6-9502-9ca63da5836d -p .cA8Q~VEBbttFVSjXQB86utMDdza7r5vk1jNNdaE --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
-        
+#    - name: Login to Azure
+#      env:
+#        AZURE_CLIENT_ID: "5545b3a9-a7bb-495d-9e0c-afdb91b5d223" # ${{ secrets.AZURE_CLIENT_ID }}
+#        AZURE_CLIENT_SECRET: "7zc8Q~oVzYDTHmmL0T_C_dkg6YqB~EizaowEQdtD" # ${{ secrets.AZURE_CLIENT_SECRET }}
+#        AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
+#        SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
+#      run: |
+#        az login --service-principal -u 86c288d6-9568-42b6-9502-9ca63da5836d -p .cA8Q~VEBbttFVSjXQB86utMDdza7r5vk1jNNdaE --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
     - name: Azure CLI script
       uses: azure/cli@v2
       with:
