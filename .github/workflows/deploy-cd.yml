@@ -67,9 +67,6 @@ jobs:
         kubectl get nodes
         kubectl get pods
         kubectl apply -f ./k8s-deployment.yml
-        
-
-#      env:
-#        KUBE_CONFIG_DATA: ${{ 
-  # secrets.KUBE_CONFIG_DATA }}
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
 
