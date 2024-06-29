@@ -6,7 +6,7 @@ on:
       - main
       - master
   workflow_dispatch:  # Para disparo manual
-  
+
 stages:
   - deploy
 
@@ -48,9 +48,9 @@ rules:
   - if: $CI_PIPELINE_SOURCE == "push"  # Executar apenas em push para o branch principal, ajuste conforme necessário
     when: always
 
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
 #    steps:
 #    - name: Checkout code
