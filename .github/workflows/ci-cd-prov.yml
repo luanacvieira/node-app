@@ -34,7 +34,7 @@ jobs:
       - name: Install Ansible and Azure dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ansible[azure]
+          pip install ansible
           ansible-galaxy collection install azure.azcollection
 
 # Adicione outras tarefas do Ansible para o provisionamento aqui

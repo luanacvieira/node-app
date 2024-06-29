@@ -11,8 +11,8 @@
 
     - name: Create Resource Group
       azure_rm_resourcegroup:
-        name: myResourceGroup #"{{ secrets.AKS_RESOURCE_GROUP }}"
-        location: centralus #"{{ secrets.AZURE_REGION }}"
+        name: "myResourceGroup" #"{{ secrets.AKS_RESOURCE_GROUP }}"
+        location: "centralus" #"{{ secrets.AZURE_REGION }}"
       register: rg_result
 
     - name: Create AKS Cluster
