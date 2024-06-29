@@ -38,7 +38,7 @@ jobs:
         az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
 
     - name: Deploy to AKS
-      run: kubectl apply -f k8s-deployment.yml
+      run: kubectl apply -f ./k8s-deployment.yml
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
 
