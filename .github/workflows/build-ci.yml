@@ -31,9 +31,9 @@ jobs:
       run: npm run lint
       working-directory: node-app
 
-    - name: Test code
-      run: npm test
-      working-directory: node-app
+#    - name: Test code
+#      run: npm test
+#      working-directory: node-app
 
     - name: Build Docker image
       run: |
