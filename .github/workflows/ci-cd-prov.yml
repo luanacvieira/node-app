@@ -39,6 +39,7 @@ jobs:
       
       - name: Install Ansible and Azure dependencies
         run: |
+          pip install --upgrade pip
           pip install ansible[azure]
           pip install azure
       
