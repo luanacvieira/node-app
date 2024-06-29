@@ -21,6 +21,7 @@ jobs:
         curl -LO https://github.com/Azure/kubelogin/releases/download/v1.22.0/kubelogin-linux-amd64.zip
         unzip kubelogin-linux-amd64.zip
         sudo install -o root -g root -m 0755 kubelogin /usr/local/bin/kubelogin
+        ls -l /usr/local/bin/kubelogin  # Verifica se o kubelogin foi instalado corretamente
 
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
@@ -39,6 +40,7 @@ jobs:
         AZURE_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" # ${{ secrets.AZURE_TENANT_ID }}
       run: |
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+            az account set --subscription $SUBSCRIPTION_ID
 
     - name: Set up AKS credentials
       run: |
