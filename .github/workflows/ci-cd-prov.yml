@@ -43,7 +43,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
           pip install ansible[azure]
-          pip install azure
+      #    pip install azure
       
       - name: Verify PATH 222
         run: |
