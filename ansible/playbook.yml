@@ -6,7 +6,7 @@
 
   tasks:
     - name: Log into Azure CLI
-      shell: az login --service-principal -u ea0f02da-f58e-490d-89d1-7fb4dbef53a7 -p QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d      changed_when: false
+      shell: az login --service-principal -u ea0f02da-f58e-490d-89d1-7fb4dbef53a7 -p QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
 
     - name: Example playbook
       hosts: localhost
