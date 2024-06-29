@@ -49,12 +49,10 @@ jobs:
 #        SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
 #      run: |
 #        az login --service-principal -u 86c288d6-9568-42b6-9502-9ca63da5836d -p .cA8Q~VEBbttFVSjXQB86utMDdza7r5vk1jNNdaE --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
-    - name: Azure login
+    - name: Log in to Azure
       uses: azure/login@v2
       with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{ secrets.AZURE_CREDENTIALS3 }}
 
     - name: Azure CLI script
       uses: azure/cli@v2
