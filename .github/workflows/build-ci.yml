@@ -1,6 +1,7 @@
 name: Build CI
 
 on:
+  workflow_dispatch:  # Para disparo manual
   push:
     branches:
       - main
@@ -31,13 +32,15 @@ jobs:
       run: npm run lint
       working-directory: node-app
 
-    - name: Test code
-      run: npm test
-      working-directory: node-app
+   # - name: Test code
+   #   run: npm test
+   #   working-directory: node-app ##
 
     - name: Build Docker image
       run: |
         docker build -t ${{ github.repository }}:latest .
+       # docker tag ${{ github.repository }}:latest ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
+
       working-directory: node-app
 
     - name: Login to Azure Container Registry

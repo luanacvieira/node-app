@@ -1,6 +1,37 @@
-- name: Provision AKS Cluster
+---
+- name: Provision Azure Kubernetes Service (AKS) Cluster
   hosts: localhost
+  connection: local
+  gather_facts: no
+
   tasks:
-    - name: Include AKS role
-      include_role:
-        name: aks
+    - name: Log into Azure CLI
+      shell: az login --service-principal -u "ecd4bc80-2562-463c-90ee-4c25c9b17042" -p "rsB8Q~C59.nuxL1XRzsJ0WKMmVRCakhnqCMY0dCv" --tenant "9d568f35-beb6-4a8f-a527-1de41404909a"
+      changed_when: false
+
+    - name: Create Resource Group
+      azure_rm_resourcegroup:
+        name: myResourceGroup #"{{ secrets.AKS_RESOURCE_GROUP }}"
+        location: centralus #"{{ secrets.AZURE_REGION }}"
+      register: rg_result
+
+    - name: Create AKS Cluster
+      azure_rm_aks:
+        resource_group: "{{ secrets.AKS_RESOURCE_GROUP }}"
+        name: "{{ secrets.AKS_CLUSTER_NAME }}"
+        location: "{{ secrets.AZURE_REGION }}"
+        dns_prefix: "myClusterAksNodeApp-dns"
+        agent_pool_profiles:
+          - name: default
+            count: "2"
+            vm_size: "Standard_DS2_v2" #"{{ agent_vm_size }}"
+        service_principal:
+          client_id: "{{ secrets.AZURE_CLIENT_ID }}"
+          client_secret: "{{ secrets.AZURE_SECRET_ID }}"
+        tags:
+          Environment: Production
+      register: aks_result
+
+    - name: Output AKS Cluster Information
+      debug:
+        var: aks_result

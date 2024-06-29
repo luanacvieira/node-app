@@ -14,14 +14,10 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: your-acr-login-server/your-repository:latest
+        image: ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
         ports:
         - containerPort: 3000
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: node-app-service
 spec:
   type: LoadBalancer
   ports:
