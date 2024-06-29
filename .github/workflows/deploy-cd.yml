@@ -23,9 +23,9 @@ jobs:
         pwd
         ls -la
         pwd
-        sudo install -o root -g root -m 0755 kubelogin ./bin/linux_amd64/
+        ls -l /bin/linux_amd64/kubelogin  # Verifica se o kubelogin foi instalado corretamente
         pwd
-        ls -la /bin/linux_amd64/kubelogin  # Verifica se o kubelogin foi instalado corretamente
+        sudo install -o root -g root -m 0755 kubelogin ./bin/linux_amd64/
         pwd
 
     - name: Set up kubectl
