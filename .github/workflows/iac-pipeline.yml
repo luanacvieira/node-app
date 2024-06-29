@@ -24,10 +24,14 @@ jobs:
 
     - name: Install Ansible and Azure dependencies
       run: |
+        pwd
+        ls -la
         python -m pip3 install --upgrade pip
         pip3 install "ansible==2.9.17"
         pip3 install ansible[azure]
-
+        pwd
+        ls -la
+        
     - name: Run Ansible playbook
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
