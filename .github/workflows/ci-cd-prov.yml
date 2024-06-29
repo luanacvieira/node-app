@@ -40,6 +40,8 @@ jobs:
       - name: Install Ansible and Azure dependencies
         run: |
           pip install --upgrade pip
+          sudo apt-get update
+          sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
           pip install ansible[azure]
           pip install azure
       
