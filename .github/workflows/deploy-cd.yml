@@ -24,8 +24,17 @@ jobs:
         cd linux_amd64
         sudo install -o root -g root -m 0755 kubelogin /usr/local/bin/kubelogin
         pwd
-    - name: Set up Azure CLI
-      uses: azure/CLI@v1
+    
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure CLI script
+      uses: azure/cli@v2
       with:
         azcliversion: latest
+        inlineScript: |
+          az account show
+          az storage -h
      
