@@ -57,13 +57,13 @@ jobs:
         run: terraform init
         working-directory: terraform/aks
 
-      - name: Terraform Apply (Initial Setup)
-        id: applyTF1
-        run: terraform apply -auto-approve || true
-        working-directory: terraform/aks
+#      - name: Terraform Apply (Initial Setup)
+#        id: applyTF1
+#        run: terraform apply -auto-approve || true
+#        working-directory: terraform/aks
         
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve || echo "Nothing to destroy"
+#      - name: Terraform Destroy
+#        run: terraform destroy -auto-approve || echo "Nothing to destroy"
         
       - name: Terraform Apply (Final Setup)
         id: applyTF2
