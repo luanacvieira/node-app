@@ -25,8 +25,8 @@
             count: "2"
             vm_size: "Standard_DS2_v2" #"{{ agent_vm_size }}"
         service_principal:
-          client_id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-          client_secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+          client_id: "{{ secrets.AZURE_CLIENTE_ID4 }}"
+          client_secret: "{{ secrets.AZURE_SECRET_ID4 }}"
         tags:
           Environment: DEV
       register: aks_result
