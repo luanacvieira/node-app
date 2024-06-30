@@ -32,7 +32,7 @@
 #          client_id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" # "{{ secrets.AZURE_CLIENT_ID }}"
 #          client_secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" # "{{ secrets.AZURE_SECRET_ID }}"
 #        tags:
-          Environment: Production
+#          Environment: Production
 #      register: aks_result
 
 #    - name: Output AKS Cluster Information
