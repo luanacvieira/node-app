@@ -7,7 +7,6 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
-
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.aks_cluster_name
   location            = azurerm_resource_group.rg.location
