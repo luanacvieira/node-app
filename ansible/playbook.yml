@@ -12,8 +12,6 @@
       shell: az login --service-principal -u "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" -p "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" --tenant "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
       changed_when: false
 
-#      
-
     - name: Create AKS Cluster
       azure_rm_aks:
         resource_group: "myResourceGroup"
@@ -25,10 +23,11 @@
             count: "2"
             vm_size: "Standard_DS2_v2" #"{{ agent_vm_size }}"
         service_principal:
-          client_id: "{{ secrets.AZURE_CLIENTE_ID4 }}"
-          client_secret: "{{ secrets.AZURE_SECRET_ID4 }}"
+          client_id: "{{ lookup('env', 'AZURE_CLIENT_ID4') }}"
+          client_secret: "{{ lookup('env', 'AZURE_SECRET_ID4') }}"
         tags:
-          Environment: DEV
+          tags:
+            Environment: DEV
       register: aks_result
 
     - name: Output AKS Cluster Information
