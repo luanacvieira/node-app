@@ -7,74 +7,77 @@ variable "client_secret" {
 }
 
 variable "resource_group_name" {
-  description = "Name of the resource group"
+  description = "The name of the resource group in which to create the AKS cluster"
+  type        = string
+  default     = "myResourceGroup"
 }
 
 variable "location" {
-  description = "Azure location"
+  description = "The Azure region in which to create resources"
+  type        = string
+  default     = "Central US"
 }
 
 variable "vnet_name" {
-  description = "Name of the virtual network"
+  description = "Name of the Virtual Network"
 }
 
 variable "vnet_address_space" {
-  description = "Address space for the virtual network"
+  description = "Address space of the Virtual Network"
 }
 
 variable "subnet_name" {
-  description = "Name of the subnet"
+  description = "Name of the Subnet"
 }
 
 variable "subnet_address_prefix" {
-  description = "Address prefix for the subnet"
+  description = "Address prefix of the Subnet"
 }
 
 variable "node_pool_subnet_name" {
-  description = "Name of the subnet for the node pool"
+  description = "Name of the Node Pool Subnet"
 }
 
 variable "node_pool_subnet_address_prefix" {
-  description = "Address prefix for the subnet of the node pool"
+  description = "Address prefix of the Node Pool Subnet"
 }
 
 variable "aks_cluster_name" {
-  description = "Name of the AKS cluster"
+  description = "Name of the AKS Cluster"
 }
 
 variable "dns_prefix" {
-  description = "DNS prefix for the AKS cluster"
+  description = "DNS Prefix for the AKS Cluster"
 }
 
 variable "node_pool_name" {
-  description = "Name of the node pool"
+  description = "Name of the Node Pool"
 }
 
 variable "node_count" {
-  description = "Number of nodes in the node pool"
+  description = "Number of Nodes in the Node Pool"
 }
 
 variable "vm_size" {
-  description = "VM size for the node pool"
+  description = "Size of the Virtual Machines in the Node Pool"
 }
 
 variable "network_plugin" {
-  description = "Network plugin for the AKS cluster"
-  default     = "azure"
+  description = "Network Plugin for the AKS Cluster"
 }
 
 variable "dns_service_ip" {
-  description = "DNS service IP"
+  description = "DNS Service IP for the AKS Cluster"
 }
 
 variable "service_cidr" {
-  description = "Service CIDR"
+  description = "Service CIDR for the AKS Cluster"
 }
 
 variable "docker_bridge_cidr" {
-  description = "Docker bridge CIDR"
+  description = "Docker Bridge CIDR for the AKS Cluster"
 }
 
 variable "environment" {
-  description = "Environment tag"
+  description = "Environment Tag for the Resources"
 }
