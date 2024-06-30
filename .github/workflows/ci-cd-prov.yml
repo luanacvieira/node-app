@@ -32,20 +32,20 @@ jobs:
 #      - name: Terraform Taint AKS
 #        run: terraform taint azurerm_kubernetes_cluster.aks
 #        env:
-#          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-#          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
-#          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
-#          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
+#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }} 
+#          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
+#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
 #      - name: Terraform Apply
 #        id: apply
 #        run: terraform apply -auto-approve
 #        working-directory: terraform/aks
 #        env:
-#          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-#          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
-#          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
-#          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
+#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
+#          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
+#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       
   build-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -99,21 +99,14 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" # ${{ secrets.AZURE_CLIENT_ID }}
-          client-secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" # ${{ secrets.AZURE_CLIENT_SECRET }}
-          tenant-id: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" 
-          subscription-id: "8c35b025-ce1a-48a1-8491-b82ae7d9249e" # ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID4 }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET4 }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-          # ${{ 
-            #secrets.AZURE_TENANT_ID }}
-      
       - name: Get AKS credentials
         run: |
-          az aks get-credentials --resource-group "myResourceGroup13" --name "myAKSCluster2" --overwrite-existing
-
-        #  az aks get-credentials --resource-group ${{ 
-            #secrets.AKS_RESOURCE_GROUP }} --name ${{ 
-                #secrets.AKS_CLUSTER_NAME }} --overwrite-existing
+          az aks get-credentials --resource-group "${{ secrets.AKS_RESOURCE_GROUP4 }}" --name "${{ secrets.AKS_CLUSTER_NAME4 }}" --overwrite-existing
 
       - name: Deploy to AKS
         run: |
