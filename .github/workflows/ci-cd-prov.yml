@@ -56,12 +56,9 @@ jobs:
       - name: Terraform Init
         run: terraform init
         working-directory: terraform/aks
-
-#      - name: Terraform Apply (Initial Setup)
-#        id: applyTF1
-#        run: terraform apply -auto-approve || true
-#        working-directory: terraform/aks
-      - name: Check if resource exists
+        
+        #verfica se RG existe, caso exista primeiro destroi ambiente depois constroi
+      - name: Terraform Check if resource exists
         id: check_resource
         run: |
           # Exemplo: Verificar se um grupo de recursos existe
@@ -70,11 +67,12 @@ jobs:
           else
             echo "::set-output name=exists::false"
           fi
-          
+
       - name: Terraform Destroy
+        if: steps.check_resource.outputs.exists == 'true'
         run: terraform destroy -auto-approve || echo "Nothing to destroy"
         
-      - name: Terraform Apply (Final Setup)
+      - name: Terraform Apply 
         id: applyTF2
         run: terraform apply -auto-approve
         working-directory: terraform/aks
