@@ -87,8 +87,12 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS3 }}
-
+          client-id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" # ${{ secrets.AZURE_CLIENT_ID }}
+          client-secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" # ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant-id: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d" 
+          # ${{ 
+            #secrets.AZURE_TENANT_ID }}
+      
       - name: Get AKS credentials
         run: |
           az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name "myAKSCluster2" --overwrite-existing
