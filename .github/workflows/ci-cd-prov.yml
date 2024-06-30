@@ -59,6 +59,12 @@ jobs:
 #      run: npm test
 #      working-directory: node-app
 
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ github.repository }}:latest .
+       
+        working-directory: node-app
+
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
@@ -66,17 +72,10 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t ${{ github.repository }}/node-app:latest .
-          docker tag ${{ github.repository }}:latest ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
-
-        working-directory: node-app
-      
       - name: Push Docker image to Azure Container Registry
         run: |
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}node-app:latest
-
+          docker tag ${{ github.repository }}:latest ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
 
   deploy-to-aks:
     runs-on: ubuntu-latest

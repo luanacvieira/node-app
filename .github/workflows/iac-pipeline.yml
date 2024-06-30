@@ -30,8 +30,7 @@ jobs:
         pip3 install "ansible==2.9.17"
         pip3 install ansible[azure]
         pwd
-        ls -la
-        
+        ls
     - name: Run Ansible playbook
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
