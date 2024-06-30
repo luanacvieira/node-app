@@ -57,7 +57,7 @@ jobs:
           ls -l /opt/hostedtoolcache/Python/3.12.4/x64
           /opt/hostedtoolcache/Python/3.12.4/x64/bin/python --version
           /opt/hostedtoolcache/Python/3.12.4/x64/bin/pip --version
-          cd /opt/hostedtoolcache/Python/3.12.4/x64/x64/bin/
+          cd /opt/hostedtoolcache/Python/3.12.4/x64/bin/
           pwd
           ls -la
 
