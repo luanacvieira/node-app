@@ -26,12 +26,12 @@
           client_id: "{{ secrets.AZURE_CLIENT_ID }}"
           client_secret: "{{ secrets.AZURE_SECRET_ID }}"
         tags:
-          Environment: Production
+          Environment: DEV
       register: aks_result
 
     - name: Output AKS Cluster Information
       debug:
-        var: aks_result  
+        var: aks_result
 
 #       - name: Create Resource Group
 #      azure_rm_resourcegroup:
