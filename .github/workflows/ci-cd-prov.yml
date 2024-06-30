@@ -58,7 +58,7 @@ jobs:
           pwd
           ls -la
           ls -l /opt/hostedtoolcache/Python/3.12.4/x64
-          sudo chmod -R 777 /opt/hostedtoolcache/Python/3.12.4/x64
+          sudo chmod -R 777 /opt/hostedtoolcache/Python/3.12.4/x64/
           ls -l /opt/hostedtoolcache/Python/3.12.4/x64
           /opt/hostedtoolcache/Python/3.12.4/x64/bin/python --version
           /opt/hostedtoolcache/Python/3.12.4/x64/bin/pip --version
