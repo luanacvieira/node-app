@@ -4,7 +4,7 @@
   connection: local
   gather_facts: no
   vars:
-    ansible_python_interpreter: /opt/hostedtoolcache/Python/3.12.4/x64
+    ansible_python_interpreter: /opt/hostedtoolcache/Python/3.12.4/x64/bin
 
  
   tasks:
