@@ -25,15 +25,15 @@ jobs:
         run: terraform init
         working-directory: terraform/aks
 
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply -auto-approve
-        working-directory: terraform/aks
-        env:
-          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
-          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
-          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
+#      - name: Terraform Apply
+#        id: apply
+#        run: terraform apply -auto-approve
+#        working-directory: terraform/aks
+#        env:
+#          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
+#          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+#          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
+#          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
       
   build-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -85,11 +85,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Azure login
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID4 }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
+          tenant-id: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
+          subscription-id: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
+          client-secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+
 
       - name: Get AKS credentials
         run: |
