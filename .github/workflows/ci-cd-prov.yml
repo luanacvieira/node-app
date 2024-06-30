@@ -29,16 +29,64 @@ jobs:
         run: terraform init
         working-directory: terraform/aks
 
-      - name: Terraform Taint AKS
-        run: terraform taint azurerm_kubernetes_cluster.aks
+      - name: Terraform Apply (Initial Setup)
+        id: apply1
+        run: terraform apply -auto-approve || true
+        working-directory: terraform/aks
         env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }} 
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TF_VAR_resource_group_name: ${{ secrets.AKS_RESOURCE_GROUP4 }}
+          TF_VAR_location: ${{ secrets.AZURE_REGION4 }}
+          TF_VAR_vnet_name: ${{ secrets.TF_AZURE_VNET_NAME }}
+          TF_VAR_vnet_address_space: "10.0.0.0/16"
+          TF_VAR_subnet_name: ${{ secrets.TF_AZURE_SUBNET_NAME }}
+          TF_VAR_node_pool_subnet_name: ${{ secrets.TF_AZURE_NODE_POLL_SUBNET_NAME }}
+          TF_VAR_node_pool_subnet_address_prefix: "10.0.2.0/24"
+          TF_VAR_aks_cluster_name: ${{ secrets.AKS_CLUSTER_NAME4 }}
+          TF_VAR_dns_prefix: ${{ secrets.TF_AZURE_DNS_PREFIX }}
+          TF_VAR_node_pool_name: "default"
+          TF_VAR_node_count: "1"
+          TF_VAR_vm_size: "Standard_DS2_v2"
+          TF_VAR_network_plugin: "azure"
+          TF_VAR_dns_service_ip: "10.0.10.10"
+          TF_VAR_service_cidr: "10.0.10.0/24"
+          TF_VAR_docker_bridge_cidr: "172.17.0.1/16"          
+          TF_VAR_environment: "Development"
 
-      - name: Terraform Apply
-        id: apply
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve || echo "Nothing to destroy"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TF_VAR_resource_group_name: ${{ secrets.AKS_RESOURCE_GROUP4 }}
+          TF_VAR_location: ${{ secrets.AZURE_REGION4 }}
+          TF_VAR_vnet_name: ${{ secrets.TF_AZURE_VNET_NAME }}
+          TF_VAR_vnet_address_space: "10.0.0.0/16"
+          TF_VAR_subnet_name: ${{ secrets.TF_AZURE_SUBNET_NAME }}
+          TF_VAR_node_pool_subnet_name: ${{ secrets.TF_AZURE_NODE_POLL_SUBNET_NAME }}
+          TF_VAR_node_pool_subnet_address_prefix: "10.0.2.0/24"
+          TF_VAR_aks_cluster_name: ${{ secrets.AKS_CLUSTER_NAME4 }}
+          TF_VAR_dns_prefix: ${{ secrets.TF_AZURE_DNS_PREFIX }}
+          TF_VAR_node_pool_name: "default"
+          TF_VAR_node_count: "1"
+          TF_VAR_vm_size: "Standard_DS2_v2"
+          TF_VAR_network_plugin: "azure"
+          TF_VAR_dns_service_ip: "10.0.10.10"
+          TF_VAR_service_cidr: "10.0.10.0/24"
+          TF_VAR_docker_bridge_cidr: "172.17.0.1/16"          
+          TF_VAR_environment: "Development"
+
+      - name: Terraform Apply (Final Setup)
+        id: apply2
         run: terraform apply -auto-approve
         working-directory: terraform/aks
         env:
@@ -51,14 +99,19 @@ jobs:
           TF_VAR_resource_group_name: ${{ secrets.AKS_RESOURCE_GROUP4 }}
           TF_VAR_location: ${{ secrets.AZURE_REGION4 }}
           TF_VAR_vnet_name: ${{ secrets.TF_AZURE_VNET_NAME }}
+          TF_VAR_vnet_address_space: "10.0.0.0/16"
           TF_VAR_subnet_name: ${{ secrets.TF_AZURE_SUBNET_NAME }}
           TF_VAR_node_pool_subnet_name: ${{ secrets.TF_AZURE_NODE_POLL_SUBNET_NAME }}
+          TF_VAR_node_pool_subnet_address_prefix: "10.0.2.0/24"
           TF_VAR_aks_cluster_name: ${{ secrets.AKS_CLUSTER_NAME4 }}
           TF_VAR_dns_prefix: ${{ secrets.TF_AZURE_DNS_PREFIX }}
           TF_VAR_node_pool_name: "default"
           TF_VAR_node_count: "1"
           TF_VAR_vm_size: "Standard_DS2_v2"
           TF_VAR_network_plugin: "azure"
+          TF_VAR_dns_service_ip: "10.0.10.10"
+          TF_VAR_service_cidr: "10.0.10.0/24"
+          TF_VAR_docker_bridge_cidr: "172.17.0.1/16"          
           TF_VAR_environment: "Development"
 
   build-and-push-docker-image:
