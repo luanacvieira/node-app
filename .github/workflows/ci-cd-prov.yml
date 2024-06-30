@@ -87,13 +87,17 @@ jobs:
       - name: Azure login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID4 }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Get AKS credentials
         run: |
-          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }} --overwrite-existing
+          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name "myAKSCluster2" --overwrite-existing
+
+        #  az aks get-credentials --resource-group ${{ 
+            #secrets.AKS_RESOURCE_GROUP }} --name ${{ 
+                #secrets.AKS_CLUSTER_NAME }} --overwrite-existing
 
       - name: Deploy to AKS
         run: |
