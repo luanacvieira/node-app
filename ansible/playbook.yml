@@ -9,8 +9,10 @@
  
   tasks:
     - name: Log into Azure CLI
-      shell: az login --service-principal -u ea0f02da-f58e-490d-89d1-7fb4dbef53a7 -p QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
+      shell: az login --service-principal -u "ecd4bc80-2562-463c-90ee-4c25c9b17042" -p "rsB8Q~C59.nuxL1XRzsJ0WKMmVRCakhnqCMY0dCv" --tenant "9d568f35-beb6-4a8f-a527-1de41404909a"
       changed_when: false
+
+#      shell: az login --service-principal -u ea0f02da-f58e-490d-89d1-7fb4dbef53a7 -p QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
 
     - name: Create AKS Cluster
       azure_rm_aks:
