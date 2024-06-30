@@ -19,12 +19,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-          tenant-id: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
-          subscription-id: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
+#      - name: Azure login
+#        uses: azure/login@v2
+#        with:
+#          client-id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
+#          tenant-id: "bd7fc3cc-a630-4a2b-a6#b9-d3878045c85d"
+#          subscription-id: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
       
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -36,15 +36,20 @@ jobs:
           pwd
           ls -la
       
-      
       - name: Install Ansible and Azure dependencies
         run: |
-          pip install --upgrade pip
-          sudo apt-get update
-          sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
+          python -m pip install --upgrade pip
           pip install ansible
-          pip install ansible[azure]
-          pip install azure-mgmt-core azure-identity
+          ansible-galaxy collection install azure.azcollection
+      
+ #     - name: Install Ansible and Azure dependencies
+ #       run: |
+ #         pip install --upgrade pip
+ #         sudo apt-get update
+ #         sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
+ #         pip install ansible
+ #         pip install ansible[azure]
+ #         pip install azure-mgmt-core azure-identity
 
       #    pip install azure
       
