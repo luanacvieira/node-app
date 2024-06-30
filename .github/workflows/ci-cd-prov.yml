@@ -29,23 +29,23 @@ jobs:
         run: terraform init
         working-directory: terraform/aks
 
-#      - name: Terraform Taint AKS
-#        run: terraform taint azurerm_kubernetes_cluster.aks
-#        env:
-#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }} 
-#          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
-#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      - name: Terraform Taint AKS
+        run: terraform taint azurerm_kubernetes_cluster.aks
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }} 
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
-#      - name: Terraform Apply
-#        id: apply
-#        run: terraform apply -auto-approve
-#        working-directory: terraform/aks
-#        env:
-#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
-#          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
-#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        working-directory: terraform/aks
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         with:
           env:
             TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
