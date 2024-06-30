@@ -46,22 +46,20 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        with:
-          env:
-            TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
-            TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-            TF_VAR_resource_group_name: ${{ secrets.AKS_RESOURCE_GROUP4 }}
-            TF_VAR_location: ${{ secrets.AZURE_REGION4 }}
-            TF_VAR_vnet_name: ${{ secrets.TF_AZURE_VNET_NAME }}
-            TF_VAR_subnet_name: ${{ secrets.TF_AZURE_SUBNET_NAME }}
-            TF_VAR_node_pool_subnet_name: ${{ secrets.TF_AZURE_NODE_POLL_SUBNET_NAME }}
-            TF_VAR_aks_cluster_name: ${{ secrets.AKS_CLUSTER_NAME4 }}
-            TF_VAR_dns_prefix: ${{ secrets.TF_AZURE_DNS_PREFIX }}
-            TF_VAR_node_pool_name: "default"
-            TF_VAR_node_count: "1"
-            TF_VAR_vm_size: "Standard_DS2_v2"
-            TF_VAR_network_plugin: "azure"
-            TF_VAR_environment: "Development"
+          TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TF_VAR_resource_group_name: ${{ secrets.AKS_RESOURCE_GROUP4 }}
+          TF_VAR_location: ${{ secrets.AZURE_REGION4 }}
+          TF_VAR_vnet_name: ${{ secrets.TF_AZURE_VNET_NAME }}
+          TF_VAR_subnet_name: ${{ secrets.TF_AZURE_SUBNET_NAME }}
+          TF_VAR_node_pool_subnet_name: ${{ secrets.TF_AZURE_NODE_POLL_SUBNET_NAME }}
+          TF_VAR_aks_cluster_name: ${{ secrets.AKS_CLUSTER_NAME4 }}
+          TF_VAR_dns_prefix: ${{ secrets.TF_AZURE_DNS_PREFIX }}
+          TF_VAR_node_pool_name: "default"
+          TF_VAR_node_count: "1"
+          TF_VAR_vm_size: "Standard_DS2_v2"
+          TF_VAR_network_plugin: "azure"
+          TF_VAR_environment: "Development"
 
   build-and-push-docker-image:
     runs-on: ubuntu-latest
