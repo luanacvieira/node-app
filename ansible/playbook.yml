@@ -11,35 +11,29 @@
     - name: Log into Azure CLI
       shell: az login --service-principal -u ea0f02da-f58e-490d-89d1-7fb4dbef53a7 -p QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY --tenant bd7fc3cc-a630-4a2b-a6b9-d3878045c85d
       changed_when: false
-#    - name: Example playbook
-#      hosts: localhost  # Define o grupo de hosts como localhost
-
-#    - name: Print current working directory
-#      debug:
-#        msg: "Current working directory is {{ ansible_env.PWD }}"
-
+#    
 #    - name: Create Resource Group
 #      azure_rm_resourcegroup:
 #        name: "myResourceGroup" #"{{ secrets.AKS_RESOURCE_GROUP }}"
 #        location: "centralus" #"{{ secrets.AZURE_REGION }}"
 #      register: rg_result
 
-    - name: Create AKS Cluster
-      azure_rm_aks:
-        resource_group: "myResourceGroup"
-        name: "MeuNovoAKS" #"{{ secrets.AKS_CLUSTER_NAME }}"
-        location: "centralus"
-        dns_prefix: "myClusterAksNodeApp-dns"
-        agent_pool_profiles:
-          - name: default
-            count: "2"
-            vm_size: "Standard_DS2_v2" #"{{ agent_vm_size }}"
-        service_principal:
-          client_id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" # "{{ secrets.AZURE_CLIENT_ID }}"
-          client_secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" # "{{ secrets.AZURE_SECRET_ID }}"
-        tags:
+#    - name: Create AKS Cluster
+#      azure_rm_aks:
+#        resource_group: "myResourceGroup"
+#        name: "MeuNovoAKS" #"{{ secrets.AKS_CLUSTER_NAME }}"
+#        location: "centralus"
+#        dns_prefix: "myClusterAksNodeApp-dns"
+#        agent_pool_profiles:
+#          - name: default
+#            count: "2"
+#            vm_size: "Standard_DS2_v2" #"{{ agent_vm_size }}"
+#        service_principal:
+#          client_id: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7" # "{{ secrets.AZURE_CLIENT_ID }}"
+#          client_secret: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY" # "{{ secrets.AZURE_SECRET_ID }}"
+#        tags:
           Environment: Production
-      register: aks_result
+#      register: aks_result
 
     - name: Output AKS Cluster Information
       debug:
