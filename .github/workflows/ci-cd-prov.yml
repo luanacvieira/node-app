@@ -72,7 +72,7 @@ jobs:
         if: steps.check_resource.outputs.exists == 'true'
         run: terraform destroy -auto-approve || echo "Nothing to destroy"
         
-      - name: Terraform Apply (Final Setup)
+      - name: Terraform Apply 
         id: applyTF2
         run: terraform apply -auto-approve
         working-directory: terraform/aks
