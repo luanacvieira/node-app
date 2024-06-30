@@ -101,7 +101,7 @@ jobs:
       
       - name: Get AKS credentials
         run: |
-          az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name "myAKSCluster2" --overwrite-existing
+          az aks get-credentials --resource-group "myResourceGroup13" --name "myAKSCluster2" --overwrite-existing
 
         #  az aks get-credentials --resource-group ${{ 
             #secrets.AKS_RESOURCE_GROUP }} --name ${{ 
