@@ -61,9 +61,18 @@ jobs:
 #        id: applyTF1
 #        run: terraform apply -auto-approve || true
 #        working-directory: terraform/aks
-        
-#      - name: Terraform Destroy
-#        run: terraform destroy -auto-approve || echo "Nothing to destroy"
+      - name: Check if resource exists
+        id: check_resource
+        run: |
+          # Exemplo: Verificar se um grupo de recursos existe
+          if terraform show -json | jq '.values.root_module.resources[] | select(.type == "azurerm_resource_group")' > /dev/null; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+          fi
+          
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve || echo "Nothing to destroy"
         
       - name: Terraform Apply (Final Setup)
         id: applyTF2
