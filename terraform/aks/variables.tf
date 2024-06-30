@@ -1,83 +1,109 @@
 variable "client_id" {
-  description = "Azure Client ID"
+  description = "The client ID for the Azure Service Principal"
+  type        = string
 }
 
 variable "client_secret" {
-  description = "Azure Client Secret"
+  description = "The client secret for the Azure Service Principal"
+  type        = string
+}
+
+variable "subscription_id" {
+  description = "The subscription ID for Azure"
+  type        = string
+}
+
+variable "tenant_id" {
+  description = "The tenant ID for Azure"
+  type        = string
 }
 
 variable "resource_group_name" {
-  description = "The name of the resource group in which to create the AKS cluster"
+  description = "The name of the resource group"
   type        = string
-  default     = "myResourceGroup"
 }
 
 variable "location" {
-  description = "The Azure region in which to create resources"
+  description = "The Azure region to deploy resources"
   type        = string
-  default     = "Central US"
 }
 
 variable "vnet_name" {
-  description = "Name of the Virtual Network"
+  description = "The name of the virtual network"
+  type        = string
 }
 
 variable "vnet_address_space" {
-  description = "Address space of the Virtual Network"
+  description = "The address space for the virtual network"
+  type        = string
 }
 
 variable "subnet_name" {
-  description = "Name of the Subnet"
-}
-
-variable "subnet_address_prefix" {
-  description = "Address prefix of the Subnet"
+  description = "The name of the subnet"
+  type        = string
 }
 
 variable "node_pool_subnet_name" {
-  description = "Name of the Node Pool Subnet"
+  description = "The name of the node pool subnet"
+  type        = string
 }
 
 variable "node_pool_subnet_address_prefix" {
-  description = "Address prefix of the Node Pool Subnet"
+  description = "The address prefix for the node pool subnet"
+  type        = string
+}
+
+variable "subnet_address_prefix" {
+  description = "The address prefix for the subnet"
+  type        = string
 }
 
 variable "aks_cluster_name" {
-  description = "Name of the AKS Cluster"
+  description = "The name of the AKS cluster"
+  type        = string
 }
 
 variable "dns_prefix" {
-  description = "DNS Prefix for the AKS Cluster"
+  description = "The DNS prefix for the AKS cluster"
+  type        = string
 }
 
 variable "node_pool_name" {
-  description = "Name of the Node Pool"
+  description = "The name of the node pool"
+  type        = string
 }
 
 variable "node_count" {
-  description = "Number of Nodes in the Node Pool"
+  description = "The number of nodes in the node pool"
+  type        = number
 }
 
 variable "vm_size" {
-  description = "Size of the Virtual Machines in the Node Pool"
+  description = "The size of the VM"
+  type        = string
 }
 
 variable "network_plugin" {
-  description = "Network Plugin for the AKS Cluster"
+  description = "The network plugin for the AKS cluster"
+  type        = string
 }
 
 variable "dns_service_ip" {
-  description = "DNS Service IP for the AKS Cluster"
+  description = "The DNS service IP for the AKS cluster"
+  type        = string
 }
 
 variable "service_cidr" {
-  description = "Service CIDR for the AKS Cluster"
+  description = "The service CIDR for the AKS cluster"
+  type        = string
 }
 
 variable "docker_bridge_cidr" {
-  description = "Docker Bridge CIDR for the AKS Cluster"
+  description = "The Docker bridge CIDR for the AKS cluster"
+  type        = string
 }
 
 variable "environment" {
-  description = "Environment Tag for the Resources"
+  description = "The environment for the deployment"
+  type        = string
 }
