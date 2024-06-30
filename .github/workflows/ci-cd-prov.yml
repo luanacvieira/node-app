@@ -8,6 +8,10 @@ on:
 
   workflow_dispatch:  # Para disparo manual
 
+permissions:
+  id-token: write
+  contents: read
+  
 jobs:
   provision-iac-terraform:
     runs-on: ubuntu-latest
