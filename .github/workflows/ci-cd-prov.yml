@@ -29,23 +29,23 @@ jobs:
         run: terraform init
         working-directory: terraform/aks
 
-      - name: Terraform Taint AKS
-        run: terraform taint azurerm_kubernetes_cluster.aks
-        env:
-          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
-          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
-          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
+#      - name: Terraform Taint AKS
+#        run: terraform taint azurerm_kubernetes_cluster.aks
+#        env:
+#          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
+#          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+#          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
+#          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
 
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply -auto-approve
-        working-directory: terraform/aks
-        env:
-          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
-          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
-          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
-          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
+#      - name: Terraform Apply
+#        id: apply
+#        run: terraform apply -auto-approve
+#        working-directory: terraform/aks
+#        env:
+#          ARM_CLIENT_ID: "ea0f02da-f58e-490d-89d1-7fb4dbef53a7"
+#          ARM_CLIENT_SECRET: "QT98Q~XSoVgBhhRq7-X5_eZeF2N.IaxtmXwn~anY"
+#          ARM_SUBSCRIPTION_ID: "8c35b025-ce1a-48a1-8491-b82ae7d9249e"
+#          ARM_TENANT_ID: "bd7fc3cc-a630-4a2b-a6b9-d3878045c85d"
       
   build-and-push-docker-image:
     runs-on: ubuntu-latest
