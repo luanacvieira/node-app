@@ -52,6 +52,7 @@ jobs:
         run: |
           pwd
           ls -la
+          ls -l /opt/hostedtoolcache/Python/3.12.4/x64
 
       - name: Run Ansible playbook
         env:
