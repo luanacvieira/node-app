@@ -57,7 +57,7 @@ jobs:
         run: terraform init
         working-directory: terraform/aks
         
-        #verfica se RG existe, caso exista ele destroy senão ele apenas constroy
+        #verfica se RG existe, caso exista primeiro destroi ambiente depois constroi
       - name: Terraform Check if resource exists
         id: check_resource
         run: |
