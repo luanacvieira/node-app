@@ -36,7 +36,7 @@ jobs:
       TF_VAR_aks_cluster_name: ${{ secrets.AKS_CLUSTER_NAME4 }}
       TF_VAR_dns_prefix: ${{ secrets.TF_AZURE_DNS_PREFIX }}
       TF_VAR_node_pool_name: "default"
-      TF_VAR_node_count: "1"
+      TF_VAR_node_count: "2"
       TF_VAR_vm_size: "Standard_DS2_v2"
       TF_VAR_network_plugin: "azure"
       TF_VAR_dns_service_ip: "10.0.10.10"
@@ -47,6 +47,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set environment variables
+        run: |
+          if [[ $GITHUB_HEAD_REF == 'develop' ]]; then
+            echo "export TF_VAR_environment=Development" >> $GITHUB_ENV
+          elif [[ $GITHUB_HEAD_REF == 'master' ]]; then
+            echo "export TF_VAR_environment=Production" >> $GITHUB_ENV
+          fi
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1

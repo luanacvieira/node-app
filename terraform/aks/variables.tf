@@ -61,6 +61,7 @@ variable "subnet_address_prefix" {
 variable "aks_cluster_name" {
   description = "The name of the AKS cluster"
   type        = string
+  default     = "myAKSCluster2value"
 }
 
 variable "dns_prefix" {
