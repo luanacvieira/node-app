@@ -14,6 +14,7 @@ permissions:
   
 jobs:
   provision-iac-terraform:
+    name: Provision AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
     runs-on: ubuntu-latest
 
     env:
@@ -48,6 +49,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      #verifica qual branch destun para saver qual ambiente deve ser criado - Dev/Prd
       - name: Set environment variables
         run: |
           if [[ $GITHUB_HEAD_REF == 'develop' ]]; then
@@ -128,6 +130,7 @@ jobs:
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
 
   deploy-to-aks:
+    name: Deploy AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
     runs-on: ubuntu-latest
     needs: build-and-push-docker-image
     steps:
