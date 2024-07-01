@@ -5,6 +5,10 @@ on:
     branches:
       - master
       - develop
+  pull_request:
+    branches:
+      - master
+      - development
 
   workflow_dispatch:  # Para disparo manual
 
@@ -133,16 +137,18 @@ jobs:
           # Create new tag and push to GitHub
           git tag $new_tag
           git push origin $new_tag
-
+ 
       - name: Set version tag
         id: vars
-        run: echo "TAG=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
-
+        run: |
+          TAG=$(git describe --tags `git rev-list --tags --max-count=1` || echo "latest")
+          echo "TAG=$TAG" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
-          docker build -t node-app:${{ env.TAG }} .
-       
+          REPO_NAME=$(echo '${{ github.repository }}' | awk -F'/' '{print $2}')
+          docker build -t $REPO_NAME:${{ env.TAG }} .    
+             
         working-directory: node-app
 
       - name: Login to Azure Container Registry
