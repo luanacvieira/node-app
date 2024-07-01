@@ -141,7 +141,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ github.repository }}" | awk -F'/' '{print $2}:${{ env.TAG }} .
+          docker build -t $(echo ${{ github.repository }} | awk -F'/' '{print $2}'):${{ env.TAG }} .
        
         working-directory: node-app
 
