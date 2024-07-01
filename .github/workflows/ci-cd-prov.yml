@@ -3,8 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
       - master
+      - develop
 
   workflow_dispatch:  # Para disparo manual
 
@@ -16,7 +16,7 @@ jobs:
   provision-iac-terraform:
     name: Provision AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
     runs-on: ubuntu-latest
-
+    # variaveis usadas para prov com Terraform
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
@@ -111,9 +111,37 @@ jobs:
 #      run: npm test
 #      working-directory: node-app
 
+      - name: Increment version and push tag
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git fetch --tags
+          # Get the latest tag
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "Latest tag: $latest_tag"
+          # Separate latest tag into components
+          IFS='.' read -ra ADDR <<< "$latest_tag"
+          major=${ADDR[0]:-0}
+          minor=${ADDR[1]:-0}
+          patch=${ADDR[2]:-0}
+          # Increment version based on type of change (for simplicity, always increment patch in this example)
+          new_patch=$((patch + 1))
+          new_tag="$major.$minor.$new_patch"
+          echo "New tag: $new_tag"
+
+          # Create new tag and push to GitHub
+          git tag $new_tag
+          git push origin $new_tag
+
+      - name: Set version tag
+        id: vars
+        run: echo "TAG=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
+
+
       - name: Build Docker image
         run: |
-          docker build -t ${{ github.repository }}:latest .
+          docker build -t ${{ github.repository }}:${{ env.TAG }} .
        
         working-directory: node-app
 
@@ -124,10 +152,13 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
+      - name: Tag Docker Image
+        run: |
+          docker tag myapp:${{ env.TAG }} myregistry.azurecr.io/myapp:${{ env.TAG }}
+
       - name: Push Docker image to Azure Container Registry
         run: |
-          docker tag ${{ github.repository }}:latest ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
+          docker push ${{ github.repository }}:${{ env.TAG }}
 
   deploy-to-aks:
     name: Deploy AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
