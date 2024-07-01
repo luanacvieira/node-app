@@ -111,7 +111,7 @@ jobs:
 #      run: npm test
 #      working-directory: node-
 
-      # para versionamento semantico
+      # para versionamento semantico, deve aplicar new TAG no build e image
       - name: Increment version and push tag
         if: github.ref == 'refs/heads/main'
         run: |
