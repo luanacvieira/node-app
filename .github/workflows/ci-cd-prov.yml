@@ -68,24 +68,24 @@ jobs:
         working-directory: terraform/aks
         
         #verfica se RG existe, caso exista primeiro destroi ambiente depois constroi
-      - name: Terraform Check if resource exists
-        id: check_resource
-        run: |
-          # Exemplo: Verificar se um grupo de recursos existe
-          if terraform show -json | jq '.values.root_module.resources[] | select(.type == "azurerm_resource_group")' > /dev/null; then
-            echo "::set-output name=exists::true"
-          else
-            echo "::set-output name=exists::false"
-          fi
+#      - name: Terraform Check if resource exists
+#        id: check_resource
+#        run: |
+#          # Exemplo: Verificar se um grupo de recursos existe
+#          if terraform show -json | jq '.values.root_module.resources[] | select(.type == "azurerm_resource_group")' > /dev/null; then
+#            echo "::set-output name=exists::true"
+#          else
+#            echo "::set-output name=exists::false"
+#          fi
 
-      - name: Terraform Destroy
-        if: steps.check_resource.outputs.exists == 'true'
-        run: terraform destroy -auto-approve || echo "Nothing to destroy"
+#      - name: Terraform Destroy
+#        if: steps.check_resource.outputs.exists == 'true'
+#        run: terraform destroy -auto-approve || echo "Nothing to destroy"
         
-      - name: Terraform Apply 
-        id: applyTF2
-        run: terraform apply -auto-approve
-        working-directory: terraform/aks
+#      - name: Terraform Apply 
+#        id: applyTF2
+#        run: terraform apply -auto-approve
+#        working-directory: terraform/aks
         
   build-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -141,7 +141,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ github.repository }}:${{ env.TAG }} .
+          docker build -t ${{ github.repository }}" | awk -F'/' '{print $2}:${{ env.TAG }} .
        
         working-directory: node-app
 
@@ -158,7 +158,7 @@ jobs:
 
       - name: Push Docker image to Azure Container Registry
         run: |
-          docker push ${{ github.repository }}:${{ env.TAG }}
+          docker push ${{ github.repository }}" | awk -F'/' '{print $2}:${{ env.TAG }}
 
   deploy-to-aks:
     name: Deploy AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
