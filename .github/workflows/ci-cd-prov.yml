@@ -5,10 +5,6 @@ on:
     branches:
       - master
       - develop
-  pull_request:
-    branches:
-      - master
-      - development
 
   workflow_dispatch:  # Para disparo manual
 
@@ -72,21 +68,21 @@ jobs:
         working-directory: terraform/aks
         
         #verfica se RG existe, caso exista primeiro destroi ambiente depois constroi
-#      - name: Terraform Check if resource exists
-#        id: check_resource
-#        run: |
-#          # Exemplo: Verificar se um grupo de recursos existe
-#          if terraform show -json | jq '.values.root_module.resources[] | select(.type == "azurerm_resource_group")' > /dev/null; then
-#            echo "::set-output name=exists::true"
-#          else
-#            echo "::set-output name=exists::false"
-#          fi
+      - name: Terraform Check if resource exists
+        id: check_resource
+        run: |
+          # Exemplo: Verificar se um grupo de recursos existe
+          if terraform show -json | jq '.values.root_module.resources[] | select(.type == "azurerm_resource_group")' > /dev/null; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+          fi
 
 #      - name: Terraform Destroy
 #        if: steps.check_resource.outputs.exists == 'true'
 #        run: terraform destroy -auto-approve || echo "Nothing to destroy"
         
-#      - name: Terraform Apply 
+#      - name: Terraform Apply - Create Environment
 #        id: applyTF2
 #        run: terraform apply -auto-approve
 #        working-directory: terraform/aks
@@ -113,22 +109,26 @@ jobs:
 
 #    - name: Test code
 #      run: npm test
-#      working-directory: node-app
+#      working-directory: node-
 
+      # para versionamento semantico
       - name: Increment version and push tag
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git fetch --tags
+
           # Get the latest tag
           latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
           echo "Latest tag: $latest_tag"
+
           # Separate latest tag into components
           IFS='.' read -ra ADDR <<< "$latest_tag"
           major=${ADDR[0]:-0}
           minor=${ADDR[1]:-0}
           patch=${ADDR[2]:-0}
+
           # Increment version based on type of change (for simplicity, always increment patch in this example)
           new_patch=$((patch + 1))
           new_tag="$major.$minor.$new_patch"
@@ -137,18 +137,11 @@ jobs:
           # Create new tag and push to GitHub
           git tag $new_tag
           git push origin $new_tag
- 
-      - name: Set version tag
-        id: vars
-        run: |
-          TAG=$(git describe --tags `git rev-list --tags --max-count=1` || echo "latest")
-          echo "TAG=$TAG" >> $GITHUB_ENV
-
+          
       - name: Build Docker image
         run: |
-          REPO_NAME=$(echo '${{ github.repository }}' | awk -F'/' '{print $2}')
-          docker build -t $REPO_NAME:${{ env.TAG }} .    
-             
+          docker build -t ${{ github.repository }}:latest .
+       
         working-directory: node-app
 
       - name: Login to Azure Container Registry
@@ -158,13 +151,10 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Tag Docker Image
-        run: |
-          docker tag myapp:${{ env.TAG }} myregistry.azurecr.io/myapp:${{ env.TAG }}
-
       - name: Push Docker image to Azure Container Registry
         run: |
-          docker push ${{ github.repository }}" | awk -F'/' '{print $2}:${{ env.TAG }}
+          docker tag ${{ github.repository }}:latest ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/${{ github.repository }}:latest
 
   deploy-to-aks:
     name: Deploy AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
