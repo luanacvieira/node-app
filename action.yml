@@ -1,0 +1,14 @@
+name: 'My Custom Action LULY-DEVOPS'
+description: 'An example GitHub Action'
+author: 'Your Name <your-email@example.com>'
+inputs:
+  myInput:
+    description: 'An input parameter'
+    required: true
+    default: 'default value'
+outputs:
+  myOutput:
+    description: 'An output value'
+runs:
+  using: 'node12'
+  main: 'index.js'
