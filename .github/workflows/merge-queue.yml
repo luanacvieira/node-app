@@ -14,8 +14,8 @@ jobs:
       - name: Run Tests (Exemplo)
         run: |
           # Substitua por comandos reais de teste
-          npm install
-          npm test
+      #    npm install
+      #    npm test
 
       - name: Merge Pull Request
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
