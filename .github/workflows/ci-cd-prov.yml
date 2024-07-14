@@ -3,8 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
       - master
+      - develop
 
   workflow_dispatch:  # Para disparo manual
 
@@ -16,7 +16,7 @@ jobs:
   provision-iac-terraform:
     name: Provision AKS on ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'Production' || 'Development' }}
     runs-on: ubuntu-latest
-
+    # variaveis usadas para prov com Terraform
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID4 }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_SECRET_ID4 }}
@@ -86,6 +86,7 @@ jobs:
         id: applyTF2
         run: terraform apply -auto-approve
         working-directory: terraform/aks
+
         
   build-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -109,8 +110,35 @@ jobs:
 
 #    - name: Test code
 #      run: npm test
-#      working-directory: node-app
+#      working-directory: node-
 
+      # para versionamento semantico, deve aplicar new TAG no build e image
+      - name: Increment version and push tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git fetch --tags
+
+          # Get the latest tag
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "Latest tag: $latest_tag"
+
+          # Separate latest tag into components
+          IFS='.' read -ra ADDR <<< "$latest_tag"
+          major=${ADDR[0]:-0}
+          minor=${ADDR[1]:-0}
+          patch=${ADDR[2]:-0}
+
+          # Increment version based on type of change (for simplicity, always increment patch in this example)
+          new_patch=$((patch + 1))
+          new_tag="$major.$minor.$new_patch"
+          echo "New tag: $new_tag"
+
+          # Create new tag and push to GitHub
+          git tag $new_tag
+          git push origin $new_tag
+          
       - name: Build Docker image
         run: |
           docker build -t ${{ github.repository }}:latest .
