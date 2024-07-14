@@ -165,18 +165,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID4 }}
-          client-secret: ${{ secrets.AZURE_SECRET_ID4 }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#      - name: Azure Login
+#        uses: azure/login@v1
+#        with:
+#          client-id: ${{ secrets.AZURE_CLIENT_ID4 }}
+#          client-secret: ${{ secrets.AZURE_SECRET_ID4 }}
+#          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Get AKS credentials
-        run: |
-          az aks get-credentials --resource-group "${{ secrets.AKS_RESOURCE_GROUP4 }}" --name "${{ secrets.AKS_CLUSTER_NAME4 }}" --overwrite-existing
+#      - name: Get AKS credentials
+#        run: |
+#          az aks get-credentials --resource-group "${{ secrets.AKS_RESOURCE_GROUP4 }}" --name "${{ secrets.AKS_CLUSTER_NAME4 }}" --overwrite-existing
 
-      - name: Deploy to AKS
-        run: |
-          kubectl apply -f k8s-deployment.yml
+#      - name: Deploy to AKS
+#        run: |
+#          kubectl apply -f k8s-deployment.yml
