@@ -1,0 +1,27 @@
+name: Merge Queue Workflow
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  merge_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Tests (Exemplo)
+        run: |
+          # Substitua por comandos reais de teste
+      #    npm install
+      #    npm test
+
+      - name: Merge Pull Request
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        run: |
+          # Simula a mesclagem do pull request
+          echo "Merging pull request ${GITHUB_REF}"
+          git checkout master  # Considerando 'master' como o ramo padrão
+          git merge --no-ff ${{ github.event.pull_request.head.sha }}
+          git push origin master
